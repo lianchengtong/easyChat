@@ -2,3 +2,4 @@
 Temp/*
 Log/*
 *.install
+/Config.php
