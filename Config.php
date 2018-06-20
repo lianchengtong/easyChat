@@ -40,7 +40,7 @@ return [
         'nodeId'=>null
     ],
     'POOL_MANAGER' => [
-        'App\Utility\RedisPool' => [
+        App\Sys\Conf::REDIS_POOL_CLASS => [
             'min' => 5,
             'max' => 100,
             'type' => 1
@@ -56,8 +56,12 @@ return [
             'min' => 5, // 最小连接数
             'max' => 100 // 最大连接数
         ],
-        'errorHandler' => function(){
+        /*
+         * 如果Redis重连失败，会判断errorHandler是否callable，
+         * 如果是，则会调用，否则会抛出异常，请自行try
+         */
+        'errorHandler' => function () {
             return null;
-        } // 如果Redis重连失败，会判断errorHandler是否callable，如果是，则会调用，否则会抛出异常，请自行try
+        }
     ]
 ];
