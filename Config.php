@@ -11,7 +11,7 @@ return [
     'MAIN_SERVER'=>[
         'HOST'=>'0.0.0.0',
         'PORT'=>9501,
-        'SERVER_TYPE'=>\EasySwoole\Core\Swoole\ServerManager::TYPE_WEB_SERVER,
+        'SERVER_TYPE'=>\EasySwoole\Core\Swoole\ServerManager::TYPE_WEB_SOCKET_SERVER,
         'SOCK_TYPE'=>SWOOLE_TCP,//该配置项当为SERVER_TYPE值为TYPE_SERVER时有效
         'RUN_MODEL'=>SWOOLE_PROCESS,
         'SETTING'=>[
@@ -60,7 +60,7 @@ return [
         // 端口
         'hostport'        => '',
         // 数据库表前缀
-        'prefix'          => 'chat_',
+        'prefix'          => '',
         // 是否需要断线重连
         'break_reconnect' => true,
         // 自动时间戳
@@ -74,16 +74,9 @@ return [
         // 是否序列化php变量
         'serialize' => false,
         // db名
-        'dbName' => 1,
+        // 'dbName' => 1,
         // 密码
         'auth' => null,
-        // 连接池配置
-        'pool' => [
-            // 最小连接数
-            'min' => 5,
-            // 最大连接数
-            'max' => 100
-        ],
         /*
          * 如果Redis重连失败，会判断errorHandler是否callable，
          * 如果是，则会调用，否则会抛出异常，请自行try
