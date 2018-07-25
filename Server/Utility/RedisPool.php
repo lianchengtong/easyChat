@@ -27,7 +27,7 @@ class RedisPool extends Pool
 
     /**
      * 实现创建对象方法
-     * @return Redis 
+     * @return Redis
      */
     protected function createObject()
     {
@@ -37,7 +37,7 @@ class RedisPool extends Pool
             $redis->setErrorHandler($conf['errorHandler']);
         }
         try {
-            $redis->exec('select', $conf['dbName']);
+            $redis->exec('select', $conf['dbName'] ?? 0);
         } catch (\Exception $e) {
         }
         return $redis;
