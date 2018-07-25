@@ -19,6 +19,10 @@ use \EasySwoole\Core\Component\Di;
 
 use \think\Db;
 
+use \App\WebSocket\Parser as WebSocketParser;
+use \App\WebSocket\Logic\Im;
+
+
 Class EasySwooleEvent implements EventInterface {
 
     public static function frameInitialize(): void
@@ -26,11 +30,18 @@ Class EasySwooleEvent implements EventInterface {
         date_default_timezone_set('Asia/Shanghai');
 
         // 全局初始化Db类
-        Db::setConfig(Config::getInstance()->getConf('DATABASE'));
+        // Db::setConfig(Config::getInstance()->getConf('DATABASE'));
     }
 
     public static function mainServerCreate(ServerManager $server,EventRegister $register): void
     {
+        // // 注册WebSocket处理
+        EventHelper::registerDefaultOnMessage($register, WebSocketParser::class);
+        // //注册onClose事件
+        $register->add($register::onClose, function (\swoole_server $server, $fd, $reactorId) {
+            //清除Redis fd的全部关联
+            Im::recyclingFd($fd);
+        });
     }
 
     public static function onRequest(Request $request,Response $response): void
